@@ -110,7 +110,7 @@ Sistema web empresarial para el control integral de inventario de productos con 
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/tu-usuario/sistema-inventario-mvc.git
+git clone https://github.com/Mike-rako/Sistema-de-Gestion-de-Inventario-ASP.NET
 cd sistema-inventario-mvc
 ```
 
