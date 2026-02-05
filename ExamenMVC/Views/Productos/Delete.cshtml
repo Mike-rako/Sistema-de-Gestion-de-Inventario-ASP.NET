@@ -1,0 +1,32 @@
+﻿@model ExamenMVC.Models.Producto
+@{
+    ViewData["Title"] = "Eliminar producto";
+}
+
+<h3 class="mb-3 text-danger">
+    <i class="bi bi-trash me-1"></i> Eliminar producto
+</h3>
+
+<div class="card shadow-sm border-danger">
+    <div class="card-body">
+        <p class="mb-3">
+            ¿Seguro que deseas eliminar este producto?
+        </p>
+
+        <ul class="list-group mb-3">
+            <li class="list-group-item"><strong>Código:</strong> @Model.Codigo</li>
+            <li class="list-group-item"><strong>Nombre:</strong> @Model.Nombre</li>
+            <li class="list-group-item"><strong>Categoría:</strong> @Model.Categoria</li>
+        </ul>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <button class="btn btn-danger">
+                <i class="bi bi-trash me-1"></i> Eliminar
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary ms-2">
+                Cancelar
+            </a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+﻿@model ExamenMVC.Models.ViewModels.UsuarioCreateVM
+@{
+    ViewData["Title"] = "Registrar Usuario";
+}
+
+<h2>Registrar Usuario</h2>
+
+@if (TempData["ok"] != null)
+{
+    <div class="alert alert-success">@TempData["ok"]</div>
+}
+
+<form asp-action="Create" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="UserName" class="form-label"></label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Password" class="form-label"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="Role" class="form-label"></label>
+        <input asp-for="Role" class="form-control" />
+        <span class="form-text">Ej.: Admin o User</span>
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary">Guardar</button>
+        <a asp-controller="Login" asp-action="Index" class="btn btn-secondary">Ir a Login</a>
+    </div>
+    @Html.AntiForgeryToken()
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

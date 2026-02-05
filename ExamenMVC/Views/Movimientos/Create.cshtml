@@ -1,0 +1,114 @@
+﻿@model ExamenMVC.Models.ViewModels.MovimientoCreateVM
+@{
+    ViewData["Title"] = "Nuevo movimiento";
+}
+
+<h3 class="mb-3">
+    <i class="bi bi-arrow-left-right me-1"></i> Nuevo movimiento
+</h3>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+
+        <!-- PASO 1 -->
+        <form method="get" class="row g-2 mb-3">
+            <div class="col-md-8">
+                <input type="text" name="q" class="form-control"
+                       placeholder="Buscar producto por código, nombre o categoría"
+                       value="@(Model.Q ?? "")" />
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-dark w-100">
+                    <i class="bi bi-search me-1"></i> Buscar
+                </button>
+            </div>
+        </form>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Q))
+        {
+            if (Model.Resultados.Any())
+            {
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th class="text-end">Precio</th>
+                            <th class="text-end">Stock</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in Model.Resultados)
+                        {
+                            <tr>
+                                <td>@p.Codigo</td>
+                                <td>@p.Nombre</td>
+                                <td>@p.Categoria</td>
+                                <td class="text-end">@p.Precio</td>
+                                <td class="text-end">@p.Stock</td>
+                                <td class="text-end">
+                                    <a class="btn btn-sm btn-outline-success"
+                                       asp-action="Create"
+                                       asp-route-q="@Model.Q"
+                                       asp-route-selectId="@p.Id">
+                                        Seleccionar
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-warning">Sin resultados.</div>
+            }
+        }
+    </div>
+</div>
+
+@if (Model.ProductoId > 0)
+{
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div class="alert alert-info">
+                <strong>Producto seleccionado:</strong> @Model.ProductoResumen
+            </div>
+
+            <form asp-action="Create" method="post" class="row g-3">
+                <input type="hidden" asp-for="ProductoId" />
+                <input type="hidden" asp-for="Q" />
+
+                <div class="col-md-4">
+                    <label asp-for="Tipo" class="form-label"></label>
+                    <select asp-for="Tipo" class="form-select">
+                        <option>Entrada</option>
+                        <option>Salida</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Cantidad" class="form-label"></label>
+                    <input asp-for="Cantidad" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Observacion" class="form-label"></label>
+                    <input asp-for="Observacion" class="form-control" />
+                </div>
+
+                <div class="col-12">
+                    <button class="btn btn-dark">
+                        <i class="bi bi-save me-1"></i> Guardar
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancelar</a>
+                </div>
+
+                @Html.AntiForgeryToken()
+            </form>
+        </div>
+    </div>
+}

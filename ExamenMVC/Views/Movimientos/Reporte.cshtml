@@ -1,0 +1,79 @@
+﻿@model ExamenMVC.Models.ViewModels.ReporteMovimientosVM
+@{
+    ViewData["Title"] = "Reporte";
+}
+
+<h3 class="mb-3">
+    <i class="bi bi-graph-up me-1"></i> Reporte de movimientos
+</h3>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label class="form-label">Desde</label>
+        <input type="date" name="desde" value="@(Model.Desde?.ToString("yyyy-MM-dd"))" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Hasta</label>
+        <input type="date" name="hasta" value="@(Model.Hasta?.ToString("yyyy-MM-dd"))" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Tipo</label>
+        <select name="tipo" class="form-select">
+            <option value="">Todos</option>
+            <option value="Entrada" selected="@(Model.Tipo == "Entrada")">Entrada</option>
+            <option value="Salida" selected="@(Model.Tipo == "Salida")">Salida</option>
+        </select>
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button class="btn btn-dark me-2">Filtrar</button>
+        <a class="btn btn-outline-secondary" asp-action="Reporte">Limpiar</a>
+    </div>
+</form>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-bg-success shadow-sm">
+            <div class="card-body">
+                Entradas <strong>@Model.TotalEntradas</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-bg-danger shadow-sm">
+            <div class="card-body">
+                Salidas <strong>@Model.TotalSalidas</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-bg-dark shadow-sm">
+            <div class="card-body">
+                Balance <strong>@Model.Balance</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-hover shadow-sm">
+    <thead class="table-light">
+        <tr>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Tipo</th>
+            <th class="text-end">Cantidad</th>
+            <th>Observación</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model.Resultados)
+        {
+            <tr>
+                <td>@m.Fecha.ToLocalTime()</td>
+                <td>@m.Producto?.Codigo - @m.Producto?.Nombre</td>
+                <td>@m.Tipo</td>
+                <td class="text-end">@m.Cantidad</td>
+                <td>@m.Observacion</td>
+            </tr>
+        }
+    </tbody>
+</table>
